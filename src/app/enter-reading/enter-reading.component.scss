@@ -1,0 +1,70 @@
+header {
+  display: grid;
+  grid-template-columns: auto 50px;
+  margin-bottom: 2rem;
+
+  h1 { margin: 0; }
+}
+
+form {
+  max-width: 25rem;
+
+  .mat-form-field {
+    width: 90%;
+    height: 90px;
+  }
+}
+
+button {
+  background: #fff;
+  border: 2px solid rgba(0, 0, 0, .5);
+  border-radius: 5px;
+  cursor: pointer;
+  padding: .5rem 1rem;
+  text-align: center;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border: 2px solid rgba(0, 0, 0, 1);
+    outline: none;
+  }
+
+  &[disabled] {
+    pointer-events: none;
+  }
+}
+
+::ng-deep .mat-dialog-container {
+  section {
+    padding-right: 1rem;
+  }
+
+  .mat-dialog-content {
+    margin: 0 -15px 0 0;
+    padding: 0 24px 0 0;
+
+    &::-webkit-scrollbar {
+      width: .5rem;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: #fff;
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb { 
+      background: rgba(0, 0, 0, .5);
+      border-radius: 5px;
+    }
+  }
+
+  .mat-dialog-actions {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      min-width: 47%;
+    }
+  }
+}

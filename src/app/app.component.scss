@@ -1,0 +1,53 @@
+header {
+    border-bottom: 2px solid rgb(255, 73, 66);
+    padding: 24px 54px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+
+    h1 {
+        margin-bottom: 0;
+
+        span {
+            height: 0;
+            position: relative;
+            left: -10000rem;
+        }
+    }
+
+    ul {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    li {
+        list-style-type: none;
+        margin-left: 1rem;
+
+        a {
+            border-radius: 50px;
+            color: rgb(255, 73, 66);
+            display: block;
+            line-height: 2rem;
+            padding: .25rem 1.5rem;
+            text-decoration: none;
+
+            &.active,
+            &:hover,
+            &:focus {
+                color: #fff;
+                background: rgb(255, 73, 66);
+                outline: none;
+            }
+        }
+    }
+}
+
+main {
+    padding: 34px 54px 14px;
+}
+
+footer {
+    padding: 4px 54px;
+}

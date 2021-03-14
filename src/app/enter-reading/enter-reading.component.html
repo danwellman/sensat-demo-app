@@ -1,0 +1,83 @@
+<header>
+  <h1>Enter Manual Reading</h1>
+  <button mat-button mat-dialog-close>X</button>
+</header>
+
+<section>
+  <mat-dialog-content>
+    <form [formGroup]="readingForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Reading ID</mat-label>
+        <input matInput cdkFocusInitial formControlName="id">
+        <mat-error *ngIf="readingForm.get('id')?.invalid">Please enter the ID of the reading</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Box ID</mat-label>
+        <input matInput formControlName="box_id">
+        <mat-error *ngIf="readingForm.get('box_id')?.invalid">Please enter the ID of the box</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Sensor Type</mat-label>
+        <input matInput formControlName="sensor_type"><!-- select -->
+        <mat-error *ngIf="readingForm.get('sensor_type')?.invalid">Please enter the sensor type</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name">
+        <mat-error *ngIf="readingForm.get('name')?.invalid">Please enter the data type</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Lower bound range</mat-label>
+        <input matInput formControlName="range_l">
+        <mat-error *ngIf="readingForm.get('range_l')?.invalid">Please enter the lower bound for this reading</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Upper bound range</mat-label>
+        <input matInput formControlName="range_u">
+        <mat-error *ngIf="readingForm.get('range_u')?.invalid">Please enter the upper bound for this reading</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Longitude</mat-label>
+        <input matInput formControlName="longitude">
+        <mat-error *ngIf="readingForm.get('longitude')?.invalid">Please enter the longitude of this reading</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Latitude</mat-label>
+        <input matInput formControlName="latitude">
+        <mat-error *ngIf="readingForm.get('latitude')?.invalid">Please enter the latitude of this reading</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Reading</mat-label>
+        <input matInput formControlName="reading">
+        <mat-error *ngIf="readingForm.get('reading')?.invalid">Please enter the reading</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Unit</mat-label>
+        <input matInput formControlName="unit">
+        <mat-error *ngIf="readingForm.get('unit')?.invalid">Please enter the unit for this reading</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Timestamp</mat-label>
+        <input matInput formControlName="reading_ts">
+        <mat-error *ngIf="readingForm.get('reading_ts')?.invalid">Please enter the timestamp of this reading</mat-error>
+      </mat-form-field>
+    </form>
+  </mat-dialog-content>
+</section>
+
+<footer>
+  <mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button [mat-dialog-close]="readingForm.value" [disabled]="!readingForm.valid">Submit</button>
+  </mat-dialog-actions>
+</footer>
