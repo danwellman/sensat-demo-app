@@ -10,7 +10,11 @@ describe('SensorDataService', () => {
     service = TestBed.inject(SensorDataService);
   });
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+  describe('getData()', () => {
+    it('returns an observable', () => {
+      const result = service.getData();
+
+      expect(result.subscribe).toBeDefined();
+    });
   });
 });

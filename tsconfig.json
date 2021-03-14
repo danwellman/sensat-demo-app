@@ -22,7 +22,8 @@
     ],
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "strictNullChecks": false
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,17 +15,21 @@ import { SensorReading } from '../_models/sensor-reading';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
-  @ViewChild(MatTable) table: MatTable<SensorReading>;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable) public table: MatTable<SensorReading>;
+  @ViewChild(MatPaginator) public paginator: MatPaginator;
+  @ViewChild(MatSort) public sort: MatSort;
+  @ViewChild('primaryInput', { static: false }) public primaryInput: ElementRef;
+  @ViewChild('secondaryInput', { static: false }) public secondaryInput: ElementRef;
 
   public displayedColumns: string[] = ['id', 'box_id', 'sensor_type', 'name', 'reading_ts'];
   public dataSource: MatTableDataSource<SensorReading>;
   public showSpinner: boolean;
   public error: boolean;
   public errorMessage: string;
+  public showFilterError: boolean;
 
-  private subs: Subscription[] = []; 
+  private subs: Subscription[] = [];
+  private originalData: SensorReading[];
 
   constructor(
     private readonly sensorDataService: SensorDataService,
@@ -38,7 +42,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     this.dataSource = new MatTableDataSource();
   }
 
-  public ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     this.subs.push(this.sensorDataService.getData().subscribe({
       next: (sensorData: SensorReading[]) => {
         this.dataSource.data = sensorData;
@@ -61,11 +65,35 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   public applyFilter(event: Event): void {
+    this.showFilterError = false;
+    this.originalData = this.dataSource.data;
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    this.resetPagination();
+  }
+
+  public applySecondaryFilter(event: Event): void {
+    if (!this.primaryInput.nativeElement.value) {
+      this.showFilterError = true;
+      this.secondaryInput.nativeElement.value = '';
+      return;
+    };
+
+    const dataFilteredByPrimary = this.dataSource.filteredData;
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.data = dataFilteredByPrimary;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    this.resetPagination();
+  }
+
+  public resetFilter(): void {
+    if (this.dataSource.filter) {
+      this.dataSource.filter = '';
+      this.dataSource.data = this.originalData;
+      this.primaryInput.nativeElement.value = '';
+      this.secondaryInput.nativeElement.value = '';
     }
   }
 
@@ -74,6 +102,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
     dialogRef.afterClosed().subscribe((result: SensorReading) => {
       this.dataSource.data.unshift(result);
+
+      if (this.originalData) this.originalData.unshift(result);
     });
+  }
+
+  private resetPagination(): void {
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }
